@@ -12,7 +12,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/vino4all/cordova-plugin-idnow.git"
+        "url": "https://github.com/PSTime/cordova-plugin-idnow.git"
     },
     "keywords": [
         "IDnow ID Verification",
