@@ -1,24 +1,29 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="cordova-plugin-idnow" version="0.0.8" 
+<plugin id="cordova-plugin-idnow" version="0.0.9" 
     xmlns="http://apache.org/cordova/ns/plugins/1.0" 
     xmlns:android="http://schemas.android.com/apk/res/android" 
     xmlns:tools="http://schemas.android.com/tools">
+
     <name>IDnowPlugin</name>
+    <description>Cordova IDNow Plugin</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova, device</keywords>
     <asset src="www/IDnowPlugin.js" target="js/IDnowPlugin.js"/>
     <js-module name="IDnowPlugin" src="www/IDnowPlugin.js">
         <clobbers target="IDnowPlugin" />
     </js-module>
+
     <platform name="android">
         <config-file parent="/*" target="res/xml/config.xml">
             <feature name="IDnowPlugin">
-                <param name="android-package" value="com.idnow.plugin.IDnowPlugin" />
+                <param name="android-package" value="org.apache.cordova.idnow.IDnowPlugin" />
             </feature>
         </config-file>
-        <config-file parent="/*" target="AndroidManifest.xml" mode="merge">
+        <config-file parent="/*" target="AndroidManifest.xml">
             <uses-permission android:name="android.permission.CAMERA" />
             <uses-permission android:name="android.permission.RECORD_AUDIO" />
         </config-file>
-        <source-file src="src/android/IDnowPlugin.java" target-dir="src/com/idnow/plugin/" />
+        <source-file src="src/android/IDnowPlugin.java" target-dir="src/org/apache/cordova/idnow" />
         <framework src="src/android/IDnowPlugin.gradle" custom="true" type="gradleReference"/>
         <!-- Common String values - default to English -->
         <resource-file src="src/android/strings_idnow.xml" target="res/values/strings_idnow.xml" />
@@ -26,8 +31,8 @@
         <resource-file src="src/android/proguard-rules.pro" target="proguard-rules.pro" />
         <!-- IDnow SDK -->
         <lib-file src="src/android/idnow-android-3.4.4.aar"/>
-    
     </platform>
+
     <platform name="ios">
         <config-file parent="/*" target="config.xml">
             <feature name="IDnowPlugin">

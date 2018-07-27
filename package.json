@@ -21,8 +21,10 @@
     ],
     "author": "Vinothkumar Arputharaj",
     "contributors": "Sakthivel",
-    "licenses": [{
-        "type": "MIT",
-        "url": "https://github.com/brentertz/scapegoat/blob/master/LICENSE-MIT"
-    }]
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://github.com/brentertz/scapegoat/blob/master/LICENSE-MIT"
+        }
+    ]
 }
