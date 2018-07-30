@@ -1,5 +1,12 @@
 var exec = require('cordova/exec');
 
+/**
+ * IDNow plugin for Cordova
+ * 
+ * @constructor
+ */
+function IDNow () {}
+
 var idnow = {};
 var pluginName = "IDnowPlugin";
 
