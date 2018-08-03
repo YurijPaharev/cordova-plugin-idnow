@@ -29,6 +29,7 @@ NSTimer *keepAliveTimer;
 
 @property (strong, nonatomic) IDnowController *idnowController;
 @property (strong, nonatomic) IDnowSettings	  *settings;
+@property (strong, nonatomic) CDVInvokedUrlCommand *globalCommand;
 
 //- (void)initIDNow:(CDVInvokedUrlCommand*)command;
 - (void)startVideoIdent:(CDVInvokedUrlCommand*)command;
