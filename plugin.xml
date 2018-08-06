@@ -30,7 +30,7 @@
        <!-- Proguard file for obfuscation rules -->
         <resource-file src="src/android/proguard-rules.pro" target="proguard-rules.pro" />
         <!-- IDnow SDK -->
-        <lib-file src="src/android/idnow-android-3.4.4.aar"/>
+        <lib-file src="src/android/idnow-android-3.10.1.aar"/>
     </platform>
 
     <platform name="ios">
