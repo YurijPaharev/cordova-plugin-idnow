@@ -10,7 +10,7 @@
     <keywords>cordova, device</keywords>
     <asset src="www/IDnowPlugin.js" target="js/IDnowPlugin.js"/>
     <js-module name="IDnowPlugin" src="www/IDnowPlugin.js">
-        <clobbers target="IDnowPlugin" />
+        <clobbers target="cordova.plugins.IDnowPlugin" />
     </js-module>
 
     <platform name="android">
