@@ -16,21 +16,24 @@
     <platform name="android">
         <config-file parent="/*" target="res/xml/config.xml">
             <feature name="IDnowPlugin">
-                <param name="android-package" value="org.apache.cordova.idnow.IDnowPlugin" />
+                <param name="android-package" value="com.apache.cordova.idnow.IDnowPlugin" />
             </feature>
         </config-file>
         <config-file parent="/*" target="AndroidManifest.xml">
             <uses-permission android:name="android.permission.CAMERA" />
             <uses-permission android:name="android.permission.RECORD_AUDIO" />
+            <uses-feature android:name="android.hardware.camera" android:required="true"/>
         </config-file>
-        <source-file src="src/android/IDnowPlugin.java" target-dir="src/org/apache/cordova/idnow" />
+        <source-file src="src/android/com/apache/cordova/idnow/IDnowPlugin.java" target-dir="src/com/apache/cordova/idnow" />
         <framework src="src/android/IDnowPlugin.gradle" custom="true" type="gradleReference"/>
+        <framework src="com.android.support:support-v4:$ANDROID_SUPPORT_V4_VERSION"/>
         <!-- Common String values - default to English -->
         <resource-file src="src/android/strings_idnow.xml" target="res/values/strings_idnow.xml" />
        <!-- Proguard file for obfuscation rules -->
         <resource-file src="src/android/proguard-rules.pro" target="proguard-rules.pro" />
         <!-- IDnow SDK -->
         <lib-file src="src/android/idnow-android-3.10.1.aar"/>
+        <preference name="ANDROID_SUPPORT_V4_VERSION" default="27.+"/>
     </platform>
 
     <platform name="ios">
