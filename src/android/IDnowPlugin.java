@@ -1,4 +1,4 @@
-package com.idnow.plugin;
+package com.cordova.plugin.android.idnow;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.widget.Toast;
 
 import org.apache.cordova.CordovaPlugin;
+
+import com.sun.org.apache.xpath.internal.SourceTree;
+
 import org.apache.cordova.CallbackContext;
 
 import org.apache.cordova.PluginResult;
@@ -42,14 +45,18 @@ public class IDnowPlugin extends CordovaPlugin {
             boolean showVideoOverviewCheck = args.getBoolean(3);
             boolean showErrorSuccessScreen = args.getBoolean(4);
             this.startVideoIdent(companyId, transactionToken, apiHost, showVideoOverviewCheck, showErrorSuccessScreen);
+            System.out.println("Cordova. exec return true");
             return true;
         }
+        System.out.println("Cordova. exec return false");
         return false;
     }
 
     private void startVideoIdent(String companyId, String transactionToken, String apiHost, boolean showVideoOverviewCheck, boolean showErrorSuccessScreen) {
         try
         {
+            System.out.println("Cordova. start video");
+            System.out.println("Cordova. start video activity = " + activity);
             cordova.setActivityResultCallback (this);
 
             IDnowSDK.getInstance().initialize( activity, companyId );
@@ -62,6 +69,7 @@ public class IDnowPlugin extends CordovaPlugin {
         }
         catch ( Exception e )
         {
+            System.out.println("Cordova. exec excep");
             e.printStackTrace();
         }
     }

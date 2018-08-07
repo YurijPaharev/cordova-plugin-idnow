@@ -23,6 +23,9 @@ dependencies {
 }
 
 android {
+    defaultConfig {
+        multiDexEnabled true
+    }
     buildTypes {
         release {
             minifyEnabled true
