@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools"
+           tools:ignore="MissingTranslation">
 
     <string name="permission_empty">At least one permission is required</string>
     <string name="unknown_permission_error">Unknown error while requesting permission</string>
