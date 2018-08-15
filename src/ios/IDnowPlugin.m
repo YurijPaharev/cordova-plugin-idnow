@@ -1,5 +1,8 @@
 /********* IDnowPlugin.m Cordova Plugin Implementation *******/
 
+#import "IDnowPlugin.h"
+#import <Cordova/CDVInvokedUrlCommand.h>
+#import <Cordova/CDVPluginResult.h>
 #import <Cordova/CDV.h>
 @import IDnowSDK;
 
@@ -23,25 +26,10 @@ BOOL SHOW_VIDEO_OVERVIEW_CHECK = true;
 
 NSTimer *keepAliveTimer;
 
-@interface IDnowPlugin : CDVPlugin {
-    // Member variables go here.
-}
-
-@property (strong, nonatomic) IDnowController *idnowController;
-@property (strong, nonatomic) IDnowSettings	  *settings;
-@property (strong, nonatomic) CDVInvokedUrlCommand *globalCommand;
-
-//- (void)initIDNow:(CDVInvokedUrlCommand*)command;
-- (void)startVideoIdent:(CDVInvokedUrlCommand*)command;
-- (void)startPhotoIdent:(CDVInvokedUrlCommand*)command;
-
-@end
-
 @implementation IDnowPlugin
 
-
 - (void) startVideoIdent:(CDVInvokedUrlCommand*)command {
-    globalCommand = command;
+    // globalCommand = command;
     
     //[self validateTimer];
     // Set up and customize settings
@@ -50,11 +38,11 @@ NSTimer *keepAliveTimer;
     self.settings.showVideoOverviewCheck = true;
     
     
-    COMPANY_ID_VIDEO_IDENT = [globalCommand.arguments objectAtIndex:0];
-    TRANSACTION_TOKEN_VIDEO_IDENT = [globalCommand.arguments objectAtIndex:1];
-    API_HOST = [globalCommand.arguments objectAtIndex:2];
-    SHOW_VIDEO_OVERVIEW_CHECK = [globalCommand.arguments objectAtIndex:3];
-    SHOW_ERROR_SUCCESS_SCREEN = [globalCommand.arguments objectAtIndex:4];
+    COMPANY_ID_VIDEO_IDENT = [command.arguments objectAtIndex:0];
+    TRANSACTION_TOKEN_VIDEO_IDENT = [command.arguments objectAtIndex:1];
+    API_HOST = [command.arguments objectAtIndex:2];
+    SHOW_VIDEO_OVERVIEW_CHECK = [command.arguments objectAtIndex:3];
+    SHOW_ERROR_SUCCESS_SCREEN = [command.arguments objectAtIndex:4];
     
     
     
@@ -68,8 +56,8 @@ NSTimer *keepAliveTimer;
     self.settings.showVideoOverviewCheck = SHOW_VIDEO_OVERVIEW_CHECK;
     self.settings.showErrorSuccessScreen = SHOW_ERROR_SUCCESS_SCREEN;
     
-    self.idnowController.delegate  = nil;
-    __weak IDnowPlugin *weakSelf   = self;
+    self.idnowController.delegate = nil;
+    __weak IDnowPlugin *weakSelf = self;
     
     // Initialize identification using blocks (alternatively you can set the delegate and implement the IDnowControllerDelegate protocol)
     [self.idnowController initializeWithCompletionBlock:^(BOOL success, NSError * _Nullable error, BOOL canceledByUser)
@@ -88,10 +76,10 @@ NSTimer *keepAliveTimer;
                   {
                       // If showErrorSuccessScreen (Settings) is disabled and error.type == IDnowErrorTypeIdentificationFailed
                       // you can show for example an alert to your users.
-                      [//self invalidateTimer];
-                      CDVPluginResult* pluginResult = nil;
-                      pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Video Identification Aborted"];
-                      [self.commandDelegate sendPluginResult:pluginResult callbackId:globalCommand.callbackId];
+                      //[self invalidateTimer];
+
+                      CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Video Identification Aborted"];
+                      [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
                   }
               }];
          }
@@ -110,7 +98,7 @@ NSTimer *keepAliveTimer;
 
 - (void)startPhotoIdent:(CDVInvokedUrlCommand*)command {
     
-    globalCommand = command;
+    // globalCommand = command;
     
     
     // Set up and customize settings
@@ -119,11 +107,11 @@ NSTimer *keepAliveTimer;
     self.settings.showVideoOverviewCheck = true;
     
     
-    COMPANY_ID_VIDEO_IDENT = [globalCommand.arguments objectAtIndex:0];
-    TRANSACTION_TOKEN_VIDEO_IDENT = [globalCommand.arguments objectAtIndex:1];
-    API_HOST = [globalCommand.arguments objectAtIndex:2];
-    SHOW_VIDEO_OVERVIEW_CHECK = [globalCommand.arguments objectAtIndex:3];
-    SHOW_ERROR_SUCCESS_SCREEN = [globalCommand.arguments objectAtIndex:4];
+    COMPANY_ID_VIDEO_IDENT = [command.arguments objectAtIndex:0];
+    TRANSACTION_TOKEN_VIDEO_IDENT = [command.arguments objectAtIndex:1];
+    API_HOST = [command.arguments objectAtIndex:2];
+    SHOW_VIDEO_OVERVIEW_CHECK = [command.arguments objectAtIndex:3];
+    SHOW_ERROR_SUCCESS_SCREEN = [command.arguments objectAtIndex:4];
     
     // Setting dummy dev token and company id -> will instantiate a photo identification
     self.settings.transactionToken = TRANSACTION_TOKEN_PHOTO_IDENT;
@@ -158,39 +146,39 @@ NSTimer *keepAliveTimer;
 }
 
 
-- (void) idnowControllerCanceledByUser: (IDnowController *) idnowController
-{
-    // The identification was canceled by the user.
-    // For example the user tapped on the "x"-Button or simply navigates back.
-    // Normally you don't have to do anything...
-    //[self invalidateTimer];
-    CDVPluginResult* pluginResult = nil;
-    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Identification Canceled By User"];
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:globalCommand.callbackId];
-}
+// - (void) idnowControllerCanceledByUser: (IDnowController *) idnowController
+// {
+//     // The identification was canceled by the user.
+//     // For example the user tapped on the "x"-Button or simply navigates back.
+//     // Normally you don't have to do anything...
+//     //[self invalidateTimer];
+//     CDVPluginResult* pluginResult = nil;
+//     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Identification Canceled By User"];
+//     [self.commandDelegate sendPluginResult:pluginResult callbackId:globalCommand.callbackId];
+// }
 
 
-- (void) idnowController: (IDnowController *) idnowController identificationDidFailWithError: (NSError *) error
-{
-    // Identification failed
-    // If showErrorSuccessScreen (Settings) is disabled and error.type == IDnowErrorTypeIdentificationFailed
-    // you can show for example an alert to your users.
-    //[self invalidateTimer];
-    CDVPluginResult* pluginResult = nil;
-    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.description];
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:globalCommand.callbackId];
-}
+// - (void) idnowController: (IDnowController *) idnowController identificationDidFailWithError: (NSError *) error
+// {
+//     // Identification failed
+//     // If showErrorSuccessScreen (Settings) is disabled and error.type == IDnowErrorTypeIdentificationFailed
+//     // you can show for example an alert to your users.
+//     //[self invalidateTimer];
+//     CDVPluginResult* pluginResult = nil;
+//     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.description];
+//     [self.commandDelegate sendPluginResult:pluginResult callbackId:globalCommand.callbackId];
+// }
 
 
-- (void) idnowControllerDidFinishIdentification: (IDnowController *) idnowController
-{
-    // Identification was successfull
-    // If showErrorSuccessScreen (Settings) is disabled
-    // you can show for example an alert to your users.
-    // [self invalidateTimer];
-    CDVPluginResult* pluginResult = nil;
-    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"Identification Finished"];
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:globalCommand.callbackId];
-}
+// - (void) idnowControllerDidFinishIdentification: (IDnowController *) idnowController
+// {
+//     // Identification was successfull
+//     // If showErrorSuccessScreen (Settings) is disabled
+//     // you can show for example an alert to your users.
+//     // [self invalidateTimer];
+//     CDVPluginResult* pluginResult = nil;
+//     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"Identification Finished"];
+//     [self.commandDelegate sendPluginResult:pluginResult callbackId:globalCommand.callbackId];
+// }
 
 @end
